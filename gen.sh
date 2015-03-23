@@ -14,11 +14,13 @@ while getopts ":d:" opt; do
   esac
 done
 
+mkdir -p _output
+cd _output
 for ARG in $*
 do
     HOST=$ARG$TLD
     echo -e "\n=== DO $HOST:"
-    mkdir $HOST
+    mkdir -p $HOST
     cd $HOST
     
     # Config file gen

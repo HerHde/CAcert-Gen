@@ -23,7 +23,7 @@ Back in the terminal, press *ENTER*, *RETURN* or what the hell you might call it
 The CSR will be deleted (you may regenerate it from the key if you are funny) and the other files will be `chmod`'ed as recommended.
 
 ## Afterwards
-You will end up with a directory named by each domain (e.g. *sub.domain.tld*), containing
+You will end up with a directory named by each domain (e.g. *./_output/**sub.domain.tld***), containing
 * *sub.domain.tld**.crt***, the actual certificate. It is *recommended* to give it `chmod 644` on the target system.
 * *sub.domain.tld**.key***, the **privatekey**. You *should* keep it **private** and `chmod 600` it on the target system.
 You may want to `scp` it to the actual server.
