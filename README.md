@@ -8,8 +8,8 @@ You need:
 * The desired domain must be registered and accepted at CAcert.
 
 ## Usage
-    ./gen.sh SUB...
-`SUB` is the desired subdomain. The 4096 bit RSA-Key will be generated and its CSR (*Certificate Signing Request*) will be printed to the `STDOUT`. Copy and paste it into the [CAcert Form](https://secure.cacert.org/account.php?id=10) to receive the certificate.
+    ./gen.sh [-d TLD] SUB...
+`SUB` are the desired domains, the optional `TLD` will be appended to each domain. The 4096 bit RSA-Key will be generated and its CSR (*Certificate Signing Request*) will be printed to the `STDOUT`. Copy and paste it into the [CAcert Form](https://secure.cacert.org/account.php?id=10) to receive the certificate.
 
 **Hint:** *You may select SHA-512 as the hash-algorythm for improved security within the advanced options before sending the CSR.*
 

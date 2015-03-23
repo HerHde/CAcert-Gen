@@ -1,7 +1,22 @@
-DOMAIN=".l-uni.co"
+#!/bin/bash -i
+
+while getopts ":d:" opt; do
+  case $opt in
+    d)
+      echo "\".$OPTARG\" will be appended to the domain names." >&2
+			TLD=".$OPTARG"
+			shift $((OPTIND-1))
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+			exit 1
+      ;;
+  esac
+done
+
 for ARG in $*
 do
-    HOST=$ARG$DOMAIN
+    HOST=$ARG$TLD
     echo -e "\n=== DO $HOST:"
     mkdir $HOST
     cd $HOST
@@ -46,5 +61,5 @@ EOF
     rm $HOST.csr
 	ls -lA .
 	cd ../
-    echo -e "\n===DONE with $HOST"
+    echo "===DONE with $HOST"
 done
