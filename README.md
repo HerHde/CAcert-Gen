@@ -27,3 +27,6 @@ You will end up with a directory named by each domain (e.g. *./_output/**sub.dom
 * *sub.domain.tld**.crt***, the actual certificate. It is *recommended* to give it `chmod 644` on the target system.
 * *sub.domain.tld**.key***, the **privatekey**. You *should* keep it **private** and `chmod 600` it on the target system.
 You may want to `scp` it to the actual server.
+
+## License
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
