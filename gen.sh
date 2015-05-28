@@ -61,6 +61,7 @@ EOF
   until [ $CRTCHK -eq 0 ]; do
     read
     /usr/bin/editor $HOST.crt
+    sed -i -e '$a\' $HOST.crt
     openssl verify -CAfile ../../root.crt $HOST.crt
     CRTCHK=$?
     if [ $CRTCHK -ne 0 ]; then
