@@ -1,17 +1,34 @@
 #!/bin/bash -i
+CAT=0
 
-while getopts ":d:" opt; do
-  case $opt in
-    d)
-    echo "\".$OPTARG\" will be appended to the domain names." >&2
-    TLD=".$OPTARG"
-    shift $((OPTIND-1))
-    ;;
-    \?)
-    echo "Invalid option: -$OPTARG" >&2
-    exit 1
-    ;;
-  esac
+while :
+do
+    case "$1" in
+      -d | --domain)
+        TLD=".$2" && echo \"$TLD\" "will be appended to the domain names." >&2
+        shift 2
+      ;;
+      -h | --help)
+        echo "Hilf dir selbst, dann hilft dir Gott." >&2 # display_help  # Call your function
+        # no shifting needed here, we're done.
+        exit 0
+      ;;
+      -c | --cat)
+        CAT=1 && echo "The root.crt will be chained to each certificate." >&2
+        shift
+      ;;
+      --) # End of all options
+        shift
+        break
+        ;;
+      -*)
+        echo "Error: Invalid option: $1" >&2
+        exit 1
+      ;;
+      *)  # No more options
+        break
+      ;;
+    esac
 done
 
 mkdir -p _output
@@ -71,6 +88,9 @@ EOF
     fi
   done
 
+  if [ $CAT -eq 1 ]; then
+      cat ../../root.crt >> $HOST.crt
+  fi
   chmod 644 $HOST.crt
   rm $HOST.csr
   ls -lA .
