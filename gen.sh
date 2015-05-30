@@ -94,18 +94,18 @@ EOF
   echo -e "\n Copy the following Certificate Request and paste it into the CAcert webformular to obtain a Certificate."
   cat $HOST.csr
 
-  echo "After pressing ENTER your editor will open up. Paste the certificate into it, save and exit."
+  echo "Copy the certificate shown on the Website, paste it here and press CTRL + D to send an end-of-file."
   CRTCHK=1
   until [ $CRTCHK -eq 0 ]; do
-    read
-    /usr/bin/editor $HOST.crt
-    sed -i -e '$a\' $HOST.crt
+    cat > $HOST.crt
+    sed -i -n '/^-----BEGIN CERTIFICATE-----/,$p' $HOST.crt # Delete anything before the BEGIN-line.
+    sed -i '/-----END CERTIFICATE-----/q' $HOST.crt # Delete anything after the END-line.
+    # sed -i -e '$a\' $HOST.crt
     openssl verify -CAfile ../../root.crt $HOST.crt
     CRTCHK=$?
     if [ $CRTCHK -ne 0 ]; then
       echo "Gooby, please reenter the *correct* certificate!"
       echo "Hint: -----BEGIN CERTIFICATE-----"
-      echo "" > $HOST.crt
     fi
   done
 
