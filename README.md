@@ -18,7 +18,7 @@ Copy and paste the certificate.
     -----BEGIN CERTIFICATE REQUEST-----
     [...]
     -----END CERTIFICATE REQUEST-----
-Back in the terminal, press *ENTER*, *RETURN* or what the hell you might call it. Your favorite texteditor (defined with `update-alternatives --config editor`) will open up. Paste the cert, save and exit. The cert will be checked against the CAcert root cert. If the cert is correct, the whole procedure will begin with the next `HOST`.
+Back in the terminal, just paste the cert (into the `cat`), press *ENTER*, *RETURN* or what the hell you might call it to end with a empty line, and then `CTRL`+`D` or whatever `EOF` you can paste to exit. The cert will be checked against the CAcert root cert. If the cert is correct, the whole procedure will begin with the next `HOST`.
 If `HOST` is `.` or the same as `TLD`, `TLD` will also be used as a `HOST`.
 
 With flag `-c` set, CAcert Class 1 (and Class 3, if the option is followed by `3`) PKI key will be cat'ed behind each certificate to build an entire *root certificate chain*.
