@@ -1,11 +1,11 @@
 #!/bin/bash -i
 CAT=0
-
+TLD=""
 while :
 do
     case "$1" in
       -d | --domain)
-        TLD=".$2" && echo \"$TLD\" "will be appended to the domain names." >&2
+        TLD="$2" && echo "--domain: \"."$TLD\" "will be appended to the domain names." >&2
         shift 2
       ;;
       -h | --help)
@@ -14,9 +14,21 @@ do
         exit 0
       ;;
       -c | --cat)
-        CAT=1 && echo "The root.crt will be chained to each certificate." >&2
+        case "$2" in
+            3)
+                CAT=$(cat root.crt class3.crt) && echo "--cat: CAcert class 1 & 3 PKI certificates will be chained to each certificate." >&2
+                shift
+            ;;
+            1)
+                CAT=$(cat root.crt) && echo "--cat: CAcert class 1 PKI certificate will be chained to each certificate." >&2
+                shift
+            ;;
+            *)
+                CAT=$(cat root.crt) && echo "--cat: CAcert class 1 PKI certificate will be chained to each certificate." >&2
+            ;;
+        esac
         shift
-      ;;
+      ;; # End of cat
       --) # End of all options
         shift
         break
@@ -31,11 +43,20 @@ do
     esac
 done
 
+
 mkdir -p _output
 cd _output
 for ARG in $*
 do
-  HOST=$ARG$TLD
+  if [ "$TLD" ]; then # If --domain is set
+      if [ "$ARG" == "." ] || [ "$ARG" == "$TLD" ]; then # If Hostname is = --domain
+          HOST=$TLD
+      else
+          HOST=$ARG"."$TLD
+      fi
+  else # Else (if HOST=FQND)
+      HOST=$ARG
+  fi
   echo -e "\n=== DO $HOST:"
   mkdir $HOST 2>/dev/null
   if [ $? -ne 0 ]; then
@@ -63,14 +84,14 @@ default_keyfile         = ${HOST}.key
 encrypt_key             = no
 string_mask = nombstr
 [ req_distinguished_name ]
-commonName              = Common Name (eg, YOUR name)lol
+commonName              = Common Name (eg, YOUR name)
 commonName_default      = $HOST
 # -------------- END custom openssl.cnf -----
 EOF
   openssl req -new -batch -config openssl.cnf -newkey rsa:4096 -out $HOST.csr
   chmod 600 $HOST.key
   rm openssl.cnf
-  echo -e "\n Copy the following Certificate Request and paste into CAcert website to obtain a Certificate."
+  echo -e "\n Copy the following Certificate Request and paste it into the CAcert webformular to obtain a Certificate."
   cat $HOST.csr
 
   echo "After pressing ENTER your editor will open up. Paste the certificate into it, save and exit."
@@ -88,8 +109,8 @@ EOF
     fi
   done
 
-  if [ $CAT -eq 1 ]; then
-      cat ../../root.crt >> $HOST.crt
+  if [ "$CAT" != 0 ]; then
+      echo "$CAT" >> $HOST.crt
   fi
   chmod 644 $HOST.crt
   rm $HOST.csr

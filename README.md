@@ -8,8 +8,8 @@ You need:
 * The desired domain must be registered and accepted at CAcert.
 
 ## Usage
-    ./gen.sh [-c] [-d TLD] SUB...
-`SUB` are the desired domains, the optional `TLD` will be appended to each domain. The 4096 bit RSA-Key will be generated and its CSR (*Certificate Signing Request*) will be printed to the `STDOUT`. Copy and paste it into the [CAcert Form](https://secure.cacert.org/account.php?id=10) to receive the certificate.
+    ./gen.sh [-c [1|3]] [-d TLD] HOST...
+`HOST` are the desired domains, the optional `TLD` will be appended to each domain. The 4096 bit RSA-Key will be generated and its CSR (*Certificate Signing Request*) will be printed to the `STDOUT`. Copy and paste it into the [CAcert Form](https://secure.cacert.org/account.php?id=10) to receive the certificate.
 
 **Hint:** *Within the web formular, you may select SHA-512 as the hash-algorythm for improved security within the advanced options before submitting the CSR.*
 
@@ -18,9 +18,10 @@ Copy and paste the certificate.
     -----BEGIN CERTIFICATE REQUEST-----
     [...]
     -----END CERTIFICATE REQUEST-----
-Back in the terminal, press *ENTER*, *RETURN* or what the hell you might call it. Your favorite texteditor (defined with `update-alternatives --config editor`) will open up. Paste the cert, save and exit. The cert will be checked against the CAcert root cert. If the cert is correct, the whole procedure will begin with the next `SUB`.
+Back in the terminal, press *ENTER*, *RETURN* or what the hell you might call it. Your favorite texteditor (defined with `update-alternatives --config editor`) will open up. Paste the cert, save and exit. The cert will be checked against the CAcert root cert. If the cert is correct, the whole procedure will begin with the next `HOST`.
+If `HOST` is `.` or the same as `TLD`, `TLD` will also be used as a `HOST`.
 
-With flag `-c` set, the root certificate will be cat'ed behind each certificate to build an entire *Class 1 certificate chain*.
+With flag `-c` set, CAcert Class 1 (and Class 3, if the option is followed by `3`) PKI key will be cat'ed behind each certificate to build an entire *root certificate chain*.
 
 The CSR will be deleted (you may regenerate it from the key if you are funny) and the other files will be `chmod`'ed as recommended.
 
