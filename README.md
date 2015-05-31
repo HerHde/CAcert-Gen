@@ -1,27 +1,28 @@
-# Generator for SSL-Server-Certificates with CAcert
-Create a SSL-Key, Certificate (and CSR) for webservers etc.
+# Generator for SSL-server-certificates with CAcert
+Create a SSL-key, certificate (and CSR) for mail/webservers etc., trusted and signed by CAcert.org.
 
 ## Prequisites
 You need:
-* **openssl-client** installed
-* An [CAcert](https://www.cacert.org/) Account with enough points to create server-certs with 24 months validity.
+* **openssl-client** installed (besides a [webbrowser](https://mozilla.org/firefox/) and some other pretty standard programs)
+* A [CAcert](https://www.cacert.org/) account (with enough points to create server-certs with 24 months validity).
 * The desired domain must be registered and accepted at CAcert.
 
 ## Usage
     ./gen.sh [-c [1|3]] [-d TLD] HOST...
-`HOST` are the desired domains, the optional `TLD` will be appended to each domain. The 4096 bit RSA-Key will be generated and its CSR (*Certificate Signing Request*) will be printed to the `STDOUT`. Copy and paste it into the [CAcert Form](https://secure.cacert.org/account.php?id=10) to receive the certificate.
+`HOST` are the desired domains, the optional `TLD` will be appended to each domain. The 4096 bit RSA-key will be generated and its CSR (*Certificate Signing Request*) will be printed to the `STDOUT`. Copy and paste it into the [CAcert form](https://secure.cacert.org/account.php?id=10) to receive the certificate.
 
-**Hint:** *Within the web formular, you may select SHA-512 as the hash-algorythm for improved security within the advanced options before submitting the CSR.*
+**Hint:** *Within the web formular, you may select SHA-512 as the hash-algorythm for improved security against hash collisions within the advanced options before submitting the CSR.*
 
 Copy and paste the certificate.
 
     -----BEGIN CERTIFICATE REQUEST-----
     [...]
     -----END CERTIFICATE REQUEST-----
-Back in the terminal, just paste the cert (into the `cat`), press *ENTER*, *RETURN* or what the hell you might call it to end with a empty line, and then `CTRL`+`D` or whatever `EOF` you can paste to exit. The cert will be checked against the CAcert root cert. If the cert is correct, the whole procedure will begin with the next `HOST`.
+
+Back in the terminal, just paste the cert (into the `cat`), press *ENTER*, *RETURN* or what the hell you might call it to end with a empty line, and then `CTRL`+`D` or whatever `EOF` you can paste to exit. The cert will be checked against the CAcert root cert. If the cert is correct, the whole procedure will repeat with the next `HOST`.
 If `HOST` is `.` or the same as `TLD`, `TLD` will also be used as a `HOST`.
 
-With flag `-c` set, CAcert Class 1 (and Class 3, if the option is followed by `3`) PKI key will be cat'ed behind each certificate to build an entire *root certificate chain*.
+With flag `-c` set, CAcert class 1 (and class 3, if the option is followed by `3`) PKI key will be cat'ed behind each certificate to build an entire *root certificate chain*.
 
 The CSR will be deleted (you may regenerate it from the key if you are funny) and the other files will be `chmod`'ed as recommended.
 
