@@ -11,7 +11,7 @@ You need:
     ./gen.sh [-c [1|3]] [-d TLD] HOST...
 `HOST` are the desired domains, the optional `TLD` will be appended to each domain. The 4096 bit RSA-key will be generated and its CSR (*Certificate Signing Request*) will be printed to the `STDOUT`. Copy and paste it into the [CAcert form](https://secure.cacert.org/account.php?id=10) to receive the certificate.
 
-**Hint:** *Within the web formular, you may select SHA-512 as the hash-algorythm for improved security against hash collisions within the advanced options before submitting the CSR.*
+**Hint:** *Within the web formular, you may select SHA-512 as the hash-algorythm for improved security against hash collisions within the advanced options before submitting the CSR. However, some older implementations may not support it.*
 
 Copy and paste the certificate.
 
