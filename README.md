@@ -33,4 +33,6 @@ You will end up with a directory named by each domain (e.g. *./_output/sub.domai
 You may want to `scp` it to the actual server.
 
 ## License
+Copyright/Copyleft/Copywrong (C) 2015 Henrik "HerHde" Hüttemann (admin@herh.de).
+Hosted at https://chef.l-uni.co/technik/CAcert-Gen
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
