@@ -4,7 +4,7 @@ Create a SSL-key, certificate (and CSR) for mail/webservers etc., trusted and si
 ## Prequisites
 You need:
 * **openssl-client** installed (besides a [webbrowser](https://mozilla.org/firefox/) and some other pretty standard programs)
-* A [CAcert](https://www.cacert.org/) account (with enough points to create server-certs with 24 months validity).
+* A [CAcert](https://www.cacert.org/) account (preferably with enough points to create server-certs with 24 months validity).
 * The desired domain must be registered and accepted at CAcert.
 
 ## Usage
@@ -38,3 +38,5 @@ Copyright/Copyleft/Copywrong (C) 2015 Henrik "HerHde" Hüttemann (admin@herh.de)
 Hosted at https://chef.l-uni.co/technik/CAcert-Gen
 
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
+
+I **did not** code anything that would infringe the integrity of your system, your account or anything else intentionally or knowingly yet.
