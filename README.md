@@ -8,7 +8,7 @@ You need:
 * The desired domain must be registered and accepted at CAcert.
 
 ## Usage
-    ./gen.sh [-c [1|3]] [-d TLD] HOST...
+    ./gen.sh [-c [1|3]] [-d TLD] [-s] HOST...
 `HOST` are the desired domains, the optional `TLD` will be appended to each domain. The 4096 bit RSA-key will be generated and its CSR (*Certificate Signing Request*) will be printed to the `STDOUT`. Copy and paste it into the [CAcert form](https://secure.cacert.org/account.php?id=10) to receive the certificate.
 
 **Hint:** *Within the web formular, you may select SHA-512 as the hash-algorythm for improved security against hash collisions within the advanced options before submitting the CSR. However, some older implementations may not support it.*
@@ -23,6 +23,8 @@ Back in the terminal, just paste the cert (into the `cat`), press *ENTER*, *RETU
 If `HOST` is `.` or the same as `TLD`, `TLD` will also be used as a `HOST`.
 
 With flag `-c` set, CAcert class 1 (and class 3, if the option is followed by `3`) PKI key will be cat'ed behind each certificate to build an entire *root certificate chain*.
+
+Flag `-s` means SubjectAltName (SAN), an X.509 extension which allows to create a cert for multiple domains. If it is set, the first domain name will be used as the standard CN, any other domains will be SANs within this single cert.
 
 The CSR will be deleted (you may regenerate it from the key if you are funny) and the other files will be `chmod`'ed as recommended.
 
